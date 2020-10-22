@@ -6,7 +6,6 @@ import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { listProductDetails } from '../actions/productActions'
-import { productDetailsReducer } from '../reducers/productReducers'
 
 const ProductScreen = ({ match }) => {
     const dispatch = useDispatch()
