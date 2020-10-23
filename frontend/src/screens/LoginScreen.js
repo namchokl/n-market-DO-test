@@ -19,6 +19,8 @@ const LoginScreen = ({ location, history }) => {
   const redirect = location.search ? location.search.split('=')[1] : '/'
 
   useEffect(() => {
+    // if 'userLogin' is available (already logged-in),
+    // just redirect to other route as specified in location.search
     if (userInfo) {
       history.push(redirect)
     }
