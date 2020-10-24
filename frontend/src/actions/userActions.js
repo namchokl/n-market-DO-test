@@ -171,5 +171,5 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo')
   dispatch({ type: USER_LOGOUT })
-  // dispatch({ type: USER_DETAILS_CLEAR })
+  dispatch({ type: USER_DETAILS_CLEAR })
 }
