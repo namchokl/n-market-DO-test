@@ -22,7 +22,8 @@ import OrderListScreen from './screens/OrderListScreen'
 const App = () => {
   return (
     <Router>
-      <Header />
+      {/* <Header /> */}
+      <Route component={Header} />
       <main className='py-3'>
         <Container>
           <Route path='/shipping' component={ShippingScreen} />
