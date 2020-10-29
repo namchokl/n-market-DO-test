@@ -1,8 +1,9 @@
 import React from 'react'
+import { Image } from 'react-bootstrap'
 
 const TestScreen = () => {
-  const cellColNum = 60
-  const cellRowNum = 40
+  const cellColNum = 10
+  const cellRowNum = 10
   const cellTotal = cellColNum * cellRowNum
   const colorSpace = 256 * 256 * 256
   const colorStep = colorSpace / cellTotal
@@ -14,9 +15,9 @@ const TestScreen = () => {
   // const key_G = Math.floor(Math.random() * 256)
   // const key_B = Math.floor(Math.random() * 256)
 
-  const key_R = 200
-  const key_G = 128
-  const key_B = 200
+  const key_R = 158
+  const key_G = 188
+  const key_B = 220
 
   const keyColor = '#' + key_R + key_G + key_B
 
@@ -28,10 +29,10 @@ const TestScreen = () => {
       <div
         style={{
           display: 'grid',
-          'grid-gap': '2px 2px',
-          'grid-template-columns': `repeat(${cellColNum}, 1fr)`,
-          'grid-template-rows': 'repeat(3, 12px)',
-          'grid-auto-rows': '12px',
+          'grid-gap': '4px 4px',
+          'grid-template-columns': `repeat(${cellColNum}, 200px)`,
+          'grid-template-rows': 'repeat(3, 200px)',
+          'grid-auto-rows': '200px',
           'justify-content': 'center',
         }}
       >
@@ -74,10 +75,21 @@ const TestScreen = () => {
               title={finalColor}
               style={{
                 backgroundColor: `${finalColor}`,
+                transform: `rotate(${Math.floor(
+                  Math.random() * 15
+                )}deg) scale(${1 - Math.random() * 0.5})`,
+                // transform: `scale(${1 - Math.random() * 0.5})`,
+                // transform: `rotateX(${Math.floor(Math.random() * 45)}deg)`,
                 // border: 'solid 1px black',
               }}
             >
               {/* {index} */}
+              <Image
+                src='/images/airpods.jpg'
+                alt=''
+                fluid
+                className='p-3 m-2'
+              />
             </div>
           )
         })}
