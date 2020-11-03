@@ -18,7 +18,12 @@ import UserEditScreen from './screens/UserEditScreen'
 import ProductListScreen from './screens/ProductListScreen'
 import ProductEditScreen from './screens/ProductEditScreen'
 import OrderListScreen from './screens/OrderListScreen'
+
 import TestScreen from './screens/TestScreen'
+import MarketListScreen from './screens/MarketListScreen'
+import MarketEditScreen from './screens/MarketEditScreen'
+import MarketScreen from './screens/MarketScreen'
+import MyProductScreen from './screens/MyProductScreen'
 
 const App = () => {
   return (
@@ -28,6 +33,20 @@ const App = () => {
       <main className='py-3'>
         <Container>
           <Route path='/test' component={TestScreen} />
+          <Route exact path='/markets' component={MarketListScreen} />
+          <Route exact path='/market/:id' component={MarketScreen} />
+          <Route path='/market/:id/page/:pageNumber' component={MarketScreen} />
+          <Route
+            path='/markets/create'
+            render={(props) => <MarketEditScreen {...props} create={true} />}
+          />
+          <Route
+            path='/market/:id/edit'
+            render={(props) => <MarketEditScreen {...props} create={false} />}
+          />
+
+          <Route path='/myproducts' component={MyProductScreen} />
+
           <Route path='/shipping' component={ShippingScreen} />
           <Route path='/payment' component={PaymentScreen} />
           <Route path='/placeorder' component={PlaceOrderScreen} />

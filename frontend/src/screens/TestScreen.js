@@ -26,6 +26,7 @@ const TestScreen = () => {
       <h1>
         key: {key_R}, {key_G}, {key_B}
       </h1>
+      <h3>สวัสดี</h3>
       <div
         style={{
           display: 'grid',

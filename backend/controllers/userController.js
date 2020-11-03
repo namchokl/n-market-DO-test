@@ -16,6 +16,7 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      markets: user.markets, // market list that user joined.
       token: generateToken(user._id),
     })
   } else {

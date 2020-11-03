@@ -46,3 +46,36 @@ h2 {
 .carousel a {
   margin: 0 auto;
 }
+
+/* MarketScreen */
+
+i.details-icon {
+  color: darkslategray;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  border: 2px solid darkslategray;
+}
+
+.join-market {
+  font-size: 150%;
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  padding: 0.4rem 0.8rem;
+}
+
+.join-market i {
+  margin-right: 0.5rem;
+}
+
+/* New Market button */
+.float-right {
+  float: right;
+}
+
+.new-market {
+  letter-spacing: 1px;
+  padding: 0.45rem 0.35rem;
+}

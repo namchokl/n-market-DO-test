@@ -3,6 +3,9 @@ import {
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
   PRODUCT_LIST_FAIL,
+  PRODUCT_MY_LIST_REQUEST,
+  PRODUCT_MY_LIST_SUCCESS,
+  PRODUCT_MY_LIST_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
@@ -23,14 +26,16 @@ import {
   PRODUCT_TOP_FAIL,
 } from '../constants/productConstants'
 
-export const listProducts = (keyword = '', pageNumber = '') => async (
-  dispatch
-) => {
+export const listProducts = (
+  market = '',
+  keyword = '',
+  pageNumber = ''
+) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST })
 
     const { data } = await axios.get(
-      `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+      `/api/products?market=${market}&keyword=${keyword}&pageNumber=${pageNumber}`
     )
 
     dispatch({
@@ -40,6 +45,45 @@ export const listProducts = (keyword = '', pageNumber = '') => async (
   } catch (error) {
     dispatch({
       type: PRODUCT_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const listMyProducts = (
+  market = '',
+  keyword = '',
+  pageNumber = ''
+) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_MY_LIST_REQUEST })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        // 'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.get(
+      `/api/products/myproducts?market=${market}&keyword=${keyword}&pageNumber=${pageNumber}`,
+      config
+    )
+
+    dispatch({
+      type: PRODUCT_MY_LIST_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_MY_LIST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

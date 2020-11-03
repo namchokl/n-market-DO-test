@@ -21,8 +21,8 @@ const Header = ({ history }) => {
     <header>
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
-          <LinkContainer to='/'>
-            <Navbar.Brand>ProShop</Navbar.Brand>
+          <LinkContainer to='/markets'>
+            <Navbar.Brand>neighbor-Market</Navbar.Brand>
           </LinkContainer>
 
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -37,6 +37,9 @@ const Header = ({ history }) => {
 
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id='username'>
+                  <LinkContainer to='/myproducts'>
+                    <NavDropdown.Item>My Products</NavDropdown.Item>
+                  </LinkContainer>
                   <LinkContainer to='/profile'>
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>

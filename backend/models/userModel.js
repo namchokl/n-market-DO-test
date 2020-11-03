@@ -21,6 +21,7 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    markets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Market' }],
   },
   {
     timestamps: true,

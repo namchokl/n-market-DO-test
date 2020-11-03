@@ -5,9 +5,10 @@ import Product from '../models/productModel.js'
 // @route   GET /api/products
 // @access  Public
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 10
+  const pageSize = 2
   const page = Number(req.query.pageNumber) || 1
 
+  const market = req.query.market
   const keyword = req.query.keyword
     ? {
         name: {
@@ -17,8 +18,48 @@ const getProducts = asyncHandler(async (req, res) => {
       }
     : {}
 
-  const count = await Product.countDocuments({ ...keyword })
-  const products = await Product.find({ ...keyword })
+  const count = await Product.countDocuments({ ...keyword, market })
+  const products = await Product.find({ ...keyword, market })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1))
+
+  res.json({ products, page, pages: Math.ceil(count / pageSize) })
+})
+
+// @desc    Fetch my products
+// @route   GET /api/products/myproducts
+// @access  Private
+const getMyProducts = asyncHandler(async (req, res) => {
+  const pageSize = 10
+  const page = Number(req.query.pageNumber) || 1
+
+  // const market = req.query.market ? { market } : {}
+  // const keyword = req.query.keyword
+  //   ? {
+  //       name: {
+  //         $regex: req.query.keyword,
+  //         $options: 'i',
+  //       },
+  //     }
+  //   : {}
+
+  let filter = { user: req.user._id }
+
+  if (req.query.market) {
+    filter.market = req.query.market
+  }
+
+  if (req.query.keyword) {
+    filter.name = {
+      $regex: req.query.keyword,
+      $options: 'i',
+    }
+  }
+
+  // const count = await Product.countDocuments({ user, ...market, ...keyword })
+  // const products = await Product.find({ user, ...market, ...keyword })
+  const count = await Product.countDocuments(filter)
+  const products = await Product.find(filter)
     .limit(pageSize)
     .skip(pageSize * (page - 1))
 
@@ -64,7 +105,7 @@ const createProduct = asyncHandler(async (req, res) => {
     name: 'Sample name',
     price: 0,
     user: req.user._id,
-    image: '/images/sample.jpg',
+    image: '/images/sample-product.jpg',
     brand: 'Sample brand',
     category: 'Sample category',
     countInStock: 0,
@@ -168,4 +209,5 @@ export {
   updateProduct,
   createProductReview,
   getTopProducts,
+  getMyProducts,
 }
