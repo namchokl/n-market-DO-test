@@ -8,7 +8,10 @@ import User from '../models/userModel.js'
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
 
-  const user = await User.findOne({ email })
+  const user = await User.findOne({ email }).populate({
+    path: 'markets',
+    select: 'name',
+  })
 
   if (user && (await user.matchPassword(password))) {
     res.json({

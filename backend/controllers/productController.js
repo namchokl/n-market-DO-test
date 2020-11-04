@@ -1,11 +1,12 @@
 import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js'
+import Market from '../models/marketModel.js'
 
 // @desc    Fetch all products
 // @route   GET /api/products
 // @access  Public
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 2
+  const pageSize = 10
   const page = Number(req.query.pageNumber) || 1
 
   const market = req.query.market
@@ -18,8 +19,10 @@ const getProducts = asyncHandler(async (req, res) => {
       }
     : {}
 
-  const count = await Product.countDocuments({ ...keyword, market })
-  const products = await Product.find({ ...keyword, market })
+  const filter = { ...keyword, markets: market }
+
+  const count = await Product.countDocuments(filter)
+  const products = await Product.find(filter)
     .limit(pageSize)
     .skip(pageSize * (page - 1))
 
@@ -129,9 +132,50 @@ const updateProduct = asyncHandler(async (req, res) => {
     brand,
     category,
     countInStock,
+    markets,
   } = req.body
 
-  const product = await Product.findById(req.params.id)
+  const productId = req.params.id
+  const product = await Product.findById(productId)
+
+  // Update 'Market' collections if product.markets list is changed.
+  product.markets.map(async (orgItem) => {
+    if (!markets.includes(orgItem)) {
+      // Remove the product from the market: orgItem
+      console.log(`Remove prod: ${productId} from market: ${orgItem}`)
+
+      let theMarket = await Market.findById(orgItem).select(
+        'numProducts products'
+      )
+
+      if (theMarket) {
+        theMarket.products = theMarket.products.filter(
+          (item) => item.toString() !== productId
+        )
+        theMarket.numProducts = theMarket.products.length
+        await theMarket.save()
+      }
+    }
+  })
+
+  markets.map(async (newItem) => {
+    if (!product.markets.includes(newItem)) {
+      // Add the product into the market: newItem
+      console.log(`Add prod: ${productId} into market: ${newItem}`)
+
+      let theMarket = await Market.findById(newItem).select(
+        'numProducts products'
+      )
+
+      if (theMarket) {
+        if (!theMarket.products.includes(productId)) {
+          theMarket.products = [...theMarket.products, productId]
+          theMarket.numProducts = theMarket.products.length
+          await theMarket.save()
+        }
+      }
+    }
+  })
 
   if (product) {
     product.name = name
@@ -141,6 +185,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.brand = brand
     product.category = category
     product.countInStock = countInStock
+    product.markets = markets
 
     const updatedProduct = await product.save()
     res.json(updatedProduct)

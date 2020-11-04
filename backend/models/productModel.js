@@ -64,6 +64,7 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    markets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Market' }],
   },
   {
     timestamps: true,

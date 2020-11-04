@@ -24,6 +24,8 @@ const ProductEditScreen = ({ match, history }) => {
   const [description, setDescription] = useState('')
   const [uploading, setUploading] = useState(false)
 
+  const [selMarkets, setSelMarkets] = useState([])
+
   const dispatch = useDispatch()
 
   const userLogin = useSelector((state) => state.userLogin)
@@ -61,6 +63,10 @@ const ProductEditScreen = ({ match, history }) => {
         setCategory(product.category)
         setCountInStock(product.countInStock)
         setDescription(product.description)
+
+        if (product.markets) {
+          setSelMarkets(product.markets)
+        }
       }
     }
   }, [dispatch, history, productId, product, successUpdate])
@@ -100,8 +106,31 @@ const ProductEditScreen = ({ match, history }) => {
         category,
         description,
         countInStock,
+        markets: [...selMarkets],
       })
     )
+  }
+
+  const selectMarketHandler = (e) => {
+    // e.preventDefault()
+    let mktId = e.target.id
+
+    console.log('click selectMarketHandler...')
+    console.log(e.target.id)
+
+    if (!selMarkets.includes(mktId)) {
+      console.log('value = TRUE')
+
+      if (!selMarkets.includes(mktId)) {
+        setSelMarkets([...selMarkets, mktId])
+      }
+    } else {
+      console.log('value = FALSE')
+
+      if (selMarkets.includes(mktId)) {
+        setSelMarkets(selMarkets.filter((item) => item !== mktId))
+      }
+    }
   }
 
   return (
@@ -199,6 +228,20 @@ const ProductEditScreen = ({ match, history }) => {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   ></Form.Control>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>ตลาดที่ลงขาย</Form.Label>
+                  {userInfo.markets.map((mr) => (
+                    <Form.Check
+                      type='switch'
+                      id={mr._id}
+                      key={mr._id}
+                      label={mr.name}
+                      checked={selMarkets.includes(mr._id)}
+                      onChange={selectMarketHandler}
+                    />
+                  ))}
                 </Form.Group>
 
                 <Button type='submit' variant='primary'>

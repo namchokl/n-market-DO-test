@@ -36,6 +36,7 @@ const marketSchema = mongoose.Schema(
       ref: 'User',
     },
     members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
   },
   {
     timestamps: true,
