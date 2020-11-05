@@ -5,6 +5,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import HomeScreen from './screens/HomeScreen'
 import ProductScreen from './screens/ProductScreen'
+import OrderProductScreen from './screens/OrderProductScreen'
 import CartScreen from './screens/CartScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
@@ -21,9 +22,12 @@ import OrderListScreen from './screens/OrderListScreen'
 
 import TestScreen from './screens/TestScreen'
 import MarketListScreen from './screens/MarketListScreen'
+import MyMarketsScreen from './screens/MyMarketsScreen'
 import MarketEditScreen from './screens/MarketEditScreen'
 import MarketScreen from './screens/MarketScreen'
 import MyProductScreen from './screens/MyProductScreen'
+import MySellingScreen from './screens/MySellingScreen'
+import MyBuyingScreen from './screens/MyBuyingScreen'
 
 const App = () => {
   return (
@@ -37,10 +41,12 @@ const App = () => {
           <Route exact path='/market/:id' component={MarketScreen} />
           <Route path='/market/:id/page/:pageNumber' component={MarketScreen} />
           <Route
+            exact
             path='/markets/create'
             render={(props) => <MarketEditScreen {...props} create={true} />}
           />
           <Route
+            exact
             path='/market/:id/edit'
             render={(props) => <MarketEditScreen {...props} create={false} />}
           />
@@ -54,7 +60,10 @@ const App = () => {
           <Route path='/login' component={LoginScreen} />
           <Route path='/register' component={RegisterScreen} />
           <Route path='/profile' component={ProfileScreen} />
+          <Route path='/myselling' component={MySellingScreen} />
+          <Route path='/mybuying' component={MyBuyingScreen} />
           <Route path='/product/:id' component={ProductScreen} />
+          <Route path='/makeorder/:id' component={OrderProductScreen} />
           <Route path='/cart/:id?' component={CartScreen} />
           <Route path='/admin/userlist' component={UserListScreen} />
           <Route path='/admin/user/:id' component={UserEditScreen} />
@@ -75,8 +84,9 @@ const App = () => {
             path='/search/:keyword/page/:pageNumber'
             component={HomeScreen}
           />
-          <Route path='/page/:pageNumber' component={HomeScreen} />
-          <Route path='/' exact component={HomeScreen} />
+          <Route path='/page/:pageNumber' component={MyMarketsScreen} />
+          <Route path='/mymarkets' exact component={MyMarketsScreen} />
+          <Route path='/' exact component={MyMarketsScreen} />
         </Container>
       </main>
       <Footer />

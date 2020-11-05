@@ -2,6 +2,9 @@ import {
   MARKET_LIST_REQUEST,
   MARKET_LIST_SUCCESS,
   MARKET_LIST_FAIL,
+  MY_MARKETS_LIST_REQUEST,
+  MY_MARKETS_LIST_SUCCESS,
+  MY_MARKETS_LIST_FAIL,
   MARKET_DETAILS_REQUEST,
   MARKET_DETAILS_SUCCESS,
   MARKET_DETAILS_FAIL,
@@ -30,6 +33,24 @@ export const marketListReducer = (state = { markets: [] }, action) => {
         pages: action.payload.pages,
       }
     case MARKET_LIST_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const myMarketListReducer = (state = { markets: [] }, action) => {
+  switch (action.type) {
+    case MY_MARKETS_LIST_REQUEST:
+      return { loading: true, markets: [] }
+    case MY_MARKETS_LIST_SUCCESS:
+      return {
+        loading: false,
+        markets: action.payload.markets,
+        page: action.payload.page,
+        pages: action.payload.pages,
+      }
+    case MY_MARKETS_LIST_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state

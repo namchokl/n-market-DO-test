@@ -37,7 +37,7 @@ export const userLoginReducer = (state = {}, action) => {
     case USER_LOGIN_UPDATE_MARKET:
       return {
         ...state,
-        userInfo: { ...state.userInfo, markets: action.payload.markets },
+        userInfo: action.payload,
       }
     case USER_LOGIN_FAIL:
       return { loading: false, error: action.payload }

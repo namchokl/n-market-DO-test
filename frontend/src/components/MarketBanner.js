@@ -1,17 +1,24 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Jumbotron, Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { joinMarket, leaveMarket } from '../actions/marketActions'
+import {
+  joinMarket,
+  leaveMarket,
+  getMarketDetails,
+} from '../actions/marketActions'
 
-const MarketBanner = () => {
+const MarketBanner = ({ name, image, id, create, market }) => {
   const dispatch = useDispatch()
+
+  // const [marketImg, setMarketImg] = useState('')
+  const [marketList, setMarketList] = useState([])
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
-  const marketDetails = useSelector((state) => state.marketDetails)
-  const { loading, joinSuccess, joinError, market } = marketDetails
+  // const marketDetails = useSelector((state) => state.marketDetails)
+  // const { loading, joinSuccess, joinError, market } = marketDetails
 
   const joinMarketHandler = () => {
     dispatch(joinMarket(market._id))
@@ -21,14 +28,26 @@ const MarketBanner = () => {
     dispatch(leaveMarket(market._id))
   }
 
+  useEffect(() => {
+    if (userInfo) {
+      setMarketList(userInfo.markets.map((item) => item._id))
+    }
+  }, [userInfo])
+  // if (create) {
+  //   setMarketImg(image)
+  // } else {
+  //   setMarketImg(market.image)
+  // }
+
+  // const theImage = create ? image : market.image
+  // const theName = create ? name : market.name
+
   return (
     <Jumbotron
       fluid
       style={{
         backgroundColor: 'lightpink',
-        backgroundImage: `url(${
-          market.image ? market.image : '/images/sample-market.jpg'
-        })`,
+        backgroundImage: `url(${image ? image : '/images/sample-market.jpg'})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         height: '160px',
@@ -47,44 +66,45 @@ const MarketBanner = () => {
           padding: '0.5rem',
         }}
       >
-        ตลาด: {market.name}
+        ตลาด: {name}
       </h1>
-      <Card.Text as='h5' className='p-3'>
-        <span title='สมาชิก'>
-          <i className='fas fa-users'></i> {market.numPeople}
-        </span>
-        <span title='สินค้า'>
-          <i className='fas fa-boxes ml-3'></i> {market.numProducts}
-        </span>
-      </Card.Text>
+      {!create && market && (
+        <Card.Text as='h5' className='p-3'>
+          <span title='สมาชิก'>
+            <i className='fas fa-users'></i> {market.numPeople}
+          </span>
+          <span title='สินค้า'>
+            <i className='fas fa-boxes ml-3'></i> {market.numProducts}
+          </span>
+        </Card.Text>
+      )}
 
-      {market._id && (
+      {market && market._id && (
         <LinkContainer to={`/market/${market._id}/edit`}>
           <i className='fas fa-ellipsis-h details-icon'></i>
         </LinkContainer>
       )}
 
-      {userInfo &&
-        (userInfo.markets.includes(market._id) ? (
-          <Button
-            variant='info'
-            size='lg'
-            className='join-market'
-            onClick={leaveMarketHandler}
-          >
-            เป็นสมาชิกแล้ว
-          </Button>
-        ) : (
-          <Button
-            variant='info'
-            size='lg'
-            className='join-market'
-            onClick={joinMarketHandler}
-          >
-            <i className='fas fa-user-plus' />
-            เข้าร่วม
-          </Button>
-        ))}
+      {marketList.includes(id) ? (
+        <Button
+          variant='info'
+          size='sm'
+          className='join-market-sm'
+          onClick={leaveMarketHandler}
+        >
+          เป็นสมาชิกแล้ว
+        </Button>
+      ) : (
+        <Button
+          variant='warning'
+          size='lg'
+          className='join-market'
+          onClick={joinMarketHandler}
+        >
+          <i className='fas fa-user-plus' />
+          เข้าร่วม
+        </Button>
+      )}
     </Jumbotron>
   )
 }

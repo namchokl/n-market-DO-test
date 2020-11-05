@@ -1,25 +1,72 @@
 import asyncHandler from 'express-async-handler'
+import generateToken from '../utils/generateToken.js'
 import Market from '../models/marketModel.js'
 import User from '../models/userModel.js'
 
-// @desc    Fetch all products
+// @desc    Fetch all markets
 // @route   GET /api/markets
 // @access  Public
 const getMarkets = asyncHandler(async (req, res) => {
   const pageSize = 10
   const page = Number(req.query.pageNumber) || 1
 
-  const keyword = req.query.keyword
-    ? {
-        name: {
-          $regex: req.query.keyword,
-          $options: 'i',
-        },
-      }
-    : {}
+  console.log('---- getMarkets ----')
+  // const keyword = req.query.keyword
+  //   ? {
+  //       name: {
+  //         $regex: req.query.keyword,
+  //         $options: 'i',
+  //       },
+  //     }
+  //   : {}
 
-  const count = await Market.countDocuments({ ...keyword })
-  const markets = await Market.find({ ...keyword })
+  const filters = {}
+
+  if (req.query.keyword) {
+    filters.name = {
+      $regex: req.query.keyword,
+      $options: 'i',
+    }
+  }
+
+  const count = await Market.countDocuments(filters)
+  const markets = await Market.find(filters)
+    .limit(pageSize)
+    .skip(pageSize * (page - 1))
+
+  res.json({ markets, page, pages: Math.ceil(count / pageSize) })
+})
+
+// @desc    Fetch my markets
+// @route   GET /api/markets/my
+// @access  Private
+const getMyMarkets = asyncHandler(async (req, res) => {
+  const pageSize = 10
+  const page = Number(req.query.pageNumber) || 1
+  console.log('---- getMyMarkets ----')
+
+  // const keyword = req.query.keyword
+  //   ? {
+  //       name: {
+  //         $regex: req.query.keyword,
+  //         $options: 'i',
+  //       },
+  //     }
+  //   : {}
+
+  const filters = {
+    members: req.user._id,
+  }
+
+  if (req.query.keyword) {
+    filters.name = {
+      $regex: req.query.keyword,
+      $options: 'i',
+    }
+  }
+
+  const count = await Market.countDocuments(filters)
+  const markets = await Market.find(filters)
     .limit(pageSize)
     .skip(pageSize * (page - 1))
 
@@ -61,18 +108,18 @@ const createMarket = asyncHandler(async (req, res) => {
   const market = new Market(req.body)
   market.creator = req.user._id
 
-  try {
-    const createdMarket = await market.save()
-    if (createdMarket) {
-      res.status(201).json(createdMarket)
-    } else {
-      res.status(400)
-      throw new Error('Market info is invalid')
-    }
-  } catch (e) {
+  // try {
+  const createdMarket = await market.save()
+  if (createdMarket) {
+    res.status(201).json(createdMarket)
+  } else {
     res.status(400)
-    throw new Error('กรุณาใส่ข้อมูลให้ครบถ้วน')
+    throw new Error('Market info is invalid')
   }
+  // } catch (e) {
+  //   res.status(400)
+  //   throw new Error('กรุณาใส่ข้อมูลให้ครบถ้วน')
+  // }
 })
 
 // @desc    Update market
@@ -124,16 +171,33 @@ const joinMarket = asyncHandler(async (req, res) => {
     if (market && user) {
       if (!user.markets.includes(marketId)) {
         user.markets.push(marketId)
-        user.save()
+        await user.save()
+      }
+
+      //get updated userInfo with markets list populated.
+      const updatedUser = await User.findById(userId)
+        .select('-password')
+        .populate({
+          path: 'markets',
+          select: 'name',
+        })
+
+      const userInfo = {
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        markets: updatedUser.markets, // market list that user joined.
+        token: generateToken(updatedUser._id),
       }
 
       if (!market.members.includes(userId)) {
         market.members.push(userId)
         market.numPeople = market.members.length
         const updatedMarket = await market.save()
-        res.json({ market: updatedMarket, user })
+        res.json({ market: updatedMarket, userInfo })
       } else {
-        res.json({ market, user })
+        res.json({ market, userInfo })
       }
     } else {
       res.status(404)
@@ -170,7 +234,24 @@ const leaveMarket = asyncHandler(async (req, res) => {
         const marketIdx = user.markets.indexOf(marketId)
 
         user.markets.splice(marketIdx, 1)
-        user.save()
+        await user.save()
+      }
+
+      //get updated userInfo with markets list populated.
+      const updatedUser = await User.findById(userId)
+        .select('-password')
+        .populate({
+          path: 'markets',
+          select: 'name',
+        })
+
+      const userInfo = {
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        markets: updatedUser.markets, // market list that user joined.
+        token: generateToken(updatedUser._id),
       }
 
       if (market.members.includes(userId)) {
@@ -179,9 +260,9 @@ const leaveMarket = asyncHandler(async (req, res) => {
         market.members.splice(memberIdx, 1)
         market.numPeople = market.members.length
         const updatedMarket = await market.save()
-        res.json({ market: updatedMarket, user })
+        res.json({ market: updatedMarket, userInfo })
       } else {
-        res.json({ market, user })
+        res.json({ market, userInfo })
       }
     } else {
       res.status(404)
@@ -196,6 +277,7 @@ const leaveMarket = asyncHandler(async (req, res) => {
 
 export {
   getMarkets,
+  getMyMarkets,
   getMarketById,
   createMarket,
   updateMarket,

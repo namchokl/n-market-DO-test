@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Route } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -11,13 +12,16 @@ import {
   Button,
   Form,
 } from 'react-bootstrap'
+
 import Product from '../components/Product'
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Paginate from '../components/Paginate'
 import MarketBanner from '../components/MarketBanner'
+import SearchBox from '../components/SearchBox'
 import Meta from '../components/Meta'
+
 import { getMarketDetails } from '../actions/marketActions'
 import { listProducts } from '../actions/productActions'
 
@@ -60,9 +64,20 @@ const MarketScreen = ({ history, match }) => {
 
   return (
     <>
-      {/* <MarketBanner name={market.name} image={market.image} id={market._id} /> */}
-      <MarketBanner />
-      <h2>รายการสินค้า</h2>
+      <MarketBanner
+        name={market.name}
+        image={market.image}
+        id={market._id}
+        create={false}
+        market={market}
+      />
+      {/* <MarketBanner market={market} /> */}
+      <Row>
+        <h2>รายการสินค้า</h2>
+
+        <Route render={({ history }) => <SearchBox history={history} />} />
+      </Row>
+
       {loadingList ? (
         <Loader />
       ) : errorList ? (

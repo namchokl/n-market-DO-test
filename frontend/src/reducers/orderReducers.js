@@ -9,6 +9,10 @@ import {
   ORDER_PAY_SUCCESS,
   ORDER_PAY_FAIL,
   ORDER_PAY_RESET,
+  ORDER_UPDATE_REQUEST,
+  ORDER_UPDATE_SUCCESS,
+  ORDER_UPDATE_FAIL,
+  ORDER_UPDATE_RESET,
   ORDER_LIST_MY_REQUEST,
   ORDER_LIST_MY_SUCCESS,
   ORDER_LIST_MY_FAIL,
@@ -17,6 +21,10 @@ import {
   ORDER_LIST_ALL_SUCCESS,
   ORDER_LIST_ALL_FAIL,
   ORDER_LIST_ALL_RESET,
+  ORDER_MY_SELLING_REQUEST,
+  ORDER_MY_SELLING_SUCCESS,
+  ORDER_MY_SELLING_FAIL,
+  ORDER_MY_SELLING_RESET,
   ORDER_DELIVER_REQUEST,
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
@@ -72,6 +80,30 @@ export const orderDetailsReducer = (
   }
 }
 
+export const orderUpdateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_UPDATE_REQUEST:
+      return {
+        loading: true,
+      }
+    case ORDER_UPDATE_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        updatedOrder: action.payload,
+      }
+    case ORDER_UPDATE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    case ORDER_UPDATE_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
 export const orderPayReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_PAY_REQUEST:
@@ -94,6 +126,7 @@ export const orderPayReducer = (state = {}, action) => {
       return state
   }
 }
+
 export const orderDeliverReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_DELIVER_REQUEST:
@@ -134,6 +167,29 @@ export const orderListMyReducer = (state = { orders: [] }, action) => {
         error: action.payload,
       }
     case ORDER_LIST_MY_RESET:
+      return { orders: [] }
+    default:
+      return state
+  }
+}
+
+export const orderMySellingReducer = (state = { orders: [] }, action) => {
+  switch (action.type) {
+    case ORDER_MY_SELLING_REQUEST:
+      return {
+        loading: true,
+      }
+    case ORDER_MY_SELLING_SUCCESS:
+      return {
+        loading: false,
+        orders: action.payload,
+      }
+    case ORDER_MY_SELLING_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    case ORDER_MY_SELLING_RESET:
       return { orders: [] }
     default:
       return state

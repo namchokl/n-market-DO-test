@@ -17,6 +17,7 @@ const ProductEditScreen = ({ match, history }) => {
 
   const [name, setName] = useState('')
   const [price, setPrice] = useState(0)
+  const [shipPrice, setShipPrice] = useState(0)
   const [image, setImage] = useState('')
   const [brand, setBrand] = useState('')
   const [category, setCategory] = useState('')
@@ -58,6 +59,7 @@ const ProductEditScreen = ({ match, history }) => {
 
         setName(product.name)
         setPrice(product.price)
+        setShipPrice(product.shipPrice)
         setImage(product.image)
         setBrand(product.brand)
         setCategory(product.category)
@@ -154,7 +156,7 @@ const ProductEditScreen = ({ match, history }) => {
             ) : (
               <Form onSubmit={submitHandler}>
                 <Form.Group controlId='name'>
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label>ชื้อสินค้า</Form.Label>
                   <Form.Control
                     type='name'
                     placeholder='Enter name'
@@ -164,7 +166,7 @@ const ProductEditScreen = ({ match, history }) => {
                 </Form.Group>
 
                 <Form.Group controlId='price'>
-                  <Form.Label>Price</Form.Label>
+                  <Form.Label>ราคา</Form.Label>
                   <Form.Control
                     type='number'
                     placeholder='Enter price'
@@ -173,8 +175,18 @@ const ProductEditScreen = ({ match, history }) => {
                   ></Form.Control>
                 </Form.Group>
 
+                <Form.Group controlId='shipPrice'>
+                  <Form.Label>ค่าจัดส่ง</Form.Label>
+                  <Form.Control
+                    type='number'
+                    placeholder='Enter shipping price'
+                    value={shipPrice}
+                    onChange={(e) => setShipPrice(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+
                 <Form.Group controlId='image'>
-                  <Form.Label>Image</Form.Label>
+                  <Form.Label>รูปภาพ</Form.Label>
                   <Form.Control
                     type='text'
                     placeholder='Enter image url'
@@ -191,7 +203,7 @@ const ProductEditScreen = ({ match, history }) => {
                 </Form.Group>
 
                 <Form.Group controlId='brand'>
-                  <Form.Label>Brand</Form.Label>
+                  <Form.Label>แบรนด์ผู้ผลิต</Form.Label>
                   <Form.Control
                     type='text'
                     placeholder='Enter brand'
@@ -201,7 +213,7 @@ const ProductEditScreen = ({ match, history }) => {
                 </Form.Group>
 
                 <Form.Group controlId='category'>
-                  <Form.Label>Category</Form.Label>
+                  <Form.Label>หมวดหมู่</Form.Label>
                   <Form.Control
                     type='text'
                     placeholder='Enter category'
@@ -211,7 +223,7 @@ const ProductEditScreen = ({ match, history }) => {
                 </Form.Group>
 
                 <Form.Group controlId='countInStock'>
-                  <Form.Label>Count In Stock</Form.Label>
+                  <Form.Label>จำนวนในสต๊อก</Form.Label>
                   <Form.Control
                     type='number'
                     placeholder='Enter countInStock'
@@ -221,7 +233,7 @@ const ProductEditScreen = ({ match, history }) => {
                 </Form.Group>
 
                 <Form.Group controlId='description'>
-                  <Form.Label>Description</Form.Label>
+                  <Form.Label>รายละเอียดสินค้า</Form.Label>
                   <Form.Control
                     type='text'
                     placeholder='Enter Description'
@@ -230,7 +242,7 @@ const ProductEditScreen = ({ match, history }) => {
                   ></Form.Control>
                 </Form.Group>
 
-                <Form.Group>
+                <Form.Group controlId='postedMarkets'>
                   <Form.Label>ตลาดที่ลงขาย</Form.Label>
                   {userInfo.markets.map((mr) => (
                     <Form.Check

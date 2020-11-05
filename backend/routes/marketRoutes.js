@@ -2,6 +2,7 @@ import express from 'express'
 const router = express.Router()
 import {
   getMarkets,
+  getMyMarkets,
   getMarketById,
   createMarket,
   updateMarket,
@@ -10,6 +11,7 @@ import {
 } from '../controllers/marketController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
+router.route('/my').get(protect, getMyMarkets)
 router.route('/').get(getMarkets).post(protect, createMarket)
 router.route('/:id').get(getMarketById).put(protect, updateMarket)
 router.route('/:id/join').post(protect, joinMarket)

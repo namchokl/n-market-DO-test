@@ -47,8 +47,23 @@ h2 {
   margin: 0 auto;
 }
 
-/* MarketScreen */
+/* Product Screen */
+select.form-control {
+  padding: 0.75rem;
+}
 
+div.product-section {
+  margin-bottom: 1.2rem;
+  padding-right: 0;
+}
+
+div.order-form {
+  margin-bottom: 3rem;
+  padding: 0 1rem 1rem;
+  border: 2px solid salmon;
+}
+
+/* MarketScreen */
 i.details-icon {
   color: darkslategray;
   position: absolute;
@@ -59,11 +74,19 @@ i.details-icon {
 }
 
 .join-market {
-  font-size: 150%;
+  font-size: 120%;
   position: absolute;
   bottom: 0.5rem;
   right: 0.5rem;
   padding: 0.4rem 0.8rem;
+}
+
+.join-market-sm {
+  font-size: 110%;
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.5rem;
 }
 
 .join-market i {

@@ -9,6 +9,9 @@ import {
   ORDER_PAY_REQUEST,
   ORDER_PAY_SUCCESS,
   ORDER_PAY_FAIL,
+  ORDER_UPDATE_REQUEST,
+  ORDER_UPDATE_SUCCESS,
+  ORDER_UPDATE_FAIL,
   // ORDER_PAY_RESET,
   ORDER_DELIVER_REQUEST,
   ORDER_DELIVER_SUCCESS,
@@ -17,6 +20,9 @@ import {
   ORDER_LIST_MY_REQUEST,
   ORDER_LIST_MY_SUCCESS,
   ORDER_LIST_MY_FAIL,
+  ORDER_MY_SELLING_REQUEST,
+  ORDER_MY_SELLING_SUCCESS,
+  ORDER_MY_SELLING_FAIL,
   ORDER_LIST_ALL_REQUEST,
   ORDER_LIST_ALL_SUCCESS,
   ORDER_LIST_ALL_FAIL,
@@ -85,6 +91,63 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+// function 'updateOrder' : 'updateCmd' structure
+// {
+//   field: 'status',
+//   cmd: 'new status'
+// }
+
+// Valid cmd = [
+//   'open',
+//   'confirmed',
+//   'delivered',
+//   'paid',
+//   'cancelled',
+//   'closed',
+// ]
+
+export const updateOrder = (orderId, updateCmd) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({
+      type: ORDER_UPDATE_REQUEST,
+    })
+
+    // 2-level Destructure to get 'state.userLogin.userInfo' object
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.put(
+      `/api/orders/${orderId}`,
+      updateCmd,
+      config
+    )
+
+    dispatch({
+      type: ORDER_UPDATE_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: ORDER_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -186,7 +249,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/orders/myorders`, config)
+    const { data } = await axios.get('/api/orders/myorders', config)
 
     dispatch({
       type: ORDER_LIST_MY_SUCCESS,
@@ -195,6 +258,41 @@ export const listMyOrders = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_LIST_MY_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const listMySelling = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_MY_SELLING_REQUEST,
+    })
+
+    // 2-level Destructure to get 'state.userLogin.userInfo' object
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        // 'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.get('/api/orders/myselling', config)
+
+    dispatch({
+      type: ORDER_MY_SELLING_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: ORDER_MY_SELLING_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

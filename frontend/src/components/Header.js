@@ -21,24 +21,42 @@ const Header = ({ history }) => {
     <header>
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
-          <LinkContainer to='/markets'>
+          <LinkContainer to='/'>
             <Navbar.Brand>neighbor-Market</Navbar.Brand>
           </LinkContainer>
 
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
-            <Route render={({ history }) => <SearchBox history={history} />} />
-            <Nav className='ml-auto'>
-              <LinkContainer to='/cart'>
+            {/* <Route render={({ history }) => <SearchBox history={history} />} /> */}
+            <Nav className='ml-auto' as='ul'>
+              <LinkContainer to='/mymarkets'>
+                <Nav.Link>
+                  <i className='fas fa-home'></i> My Markets
+                </Nav.Link>
+              </LinkContainer>
+
+              <LinkContainer to='/markets'>
+                <Nav.Link>
+                  <i className='fas fa-compass'></i> Markets
+                </Nav.Link>
+              </LinkContainer>
+
+              {/* <LinkContainer to='/cart'>
                 <Nav.Link>
                   <i className='fas fa-shopping-cart'></i> Cart
                 </Nav.Link>
-              </LinkContainer>
+              </LinkContainer> */}
 
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id='username'>
                   <LinkContainer to='/myproducts'>
-                    <NavDropdown.Item>My Products</NavDropdown.Item>
+                    <NavDropdown.Item>สินค้า</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/myselling'>
+                    <NavDropdown.Item>รายการขาย</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/mybuying'>
+                    <NavDropdown.Item>รายการชื้อ</NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to='/profile'>
                     <NavDropdown.Item>Profile</NavDropdown.Item>

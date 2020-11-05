@@ -30,11 +30,14 @@ import {
   orderPayReducer,
   orderDeliverReducer,
   orderListMyReducer,
+  orderMySellingReducer,
   orderListAllReducer,
+  orderUpdateReducer,
 } from './reducers/orderReducers'
 
 import {
   marketListReducer,
+  myMarketListReducer,
   marketDetailsReducer,
   marketCreateReducer,
   marketUpdateReducer,
@@ -62,8 +65,11 @@ const reducer = combineReducers({
   orderPay: orderPayReducer,
   orderDeliver: orderDeliverReducer,
   orderListMy: orderListMyReducer,
+  orderMySelling: orderMySellingReducer,
   orderListAll: orderListAllReducer,
+  orderUpdate: orderUpdateReducer,
   marketList: marketListReducer,
+  myMarketList: myMarketListReducer,
   marketDetails: marketDetailsReducer,
   marketCreate: marketCreateReducer,
   marketUpdate: marketUpdateReducer,

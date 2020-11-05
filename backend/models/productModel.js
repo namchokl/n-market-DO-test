@@ -23,6 +23,10 @@ const productSchema = mongoose.Schema(
       required: true,
       ref: 'User',
     },
+    sellerName: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -33,7 +37,6 @@ const productSchema = mongoose.Schema(
     },
     brand: {
       type: String,
-      required: true,
     },
     category: {
       type: String,
@@ -59,10 +62,19 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
-    countInStock: {
+    shipPrice: {
       type: Number,
       required: true,
       default: 0,
+    },
+    active: {
+      type: Boolean,
+      default: true,
+    },
+    countInStock: {
+      type: Number,
+      required: true,
+      default: 99999,
     },
     markets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Market' }],
   },

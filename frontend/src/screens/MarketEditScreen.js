@@ -12,7 +12,6 @@ import {
   getMarketDetails,
   updateMarket,
 } from '../actions/marketActions'
-import { MARKET_CREATE_RESET } from '../constants/marketConstants'
 
 const MarketEditScreen = ({ match, history, create }) => {
   let marketId = null
@@ -21,7 +20,7 @@ const MarketEditScreen = ({ match, history, create }) => {
   }
 
   const [name, setName] = useState('')
-  const [country, setCountry] = useState('')
+  const [country, setCountry] = useState('ประเทศไทย')
   const [address, setAddress] = useState('')
   const [district, setDistrict] = useState('')
   const [province, setProvince] = useState('')
@@ -144,7 +143,7 @@ const MarketEditScreen = ({ match, history, create }) => {
       >
         Go Back
       </Link>
-      <MarketBanner name={name} image={image} id={null} />
+      <MarketBanner name={name} image={image} create={create} />
       <FormContainer>
         {create ? <h1>สร้างตลาดขึ้นใหม่</h1> : <h1>แก้ไขข้อมูลตลาด</h1>}
         {loadingUpdate && <Loader />}
@@ -209,7 +208,7 @@ const MarketEditScreen = ({ match, history, create }) => {
             <Form.Label>ประเทศ</Form.Label>
             <Form.Control
               type='text'
-              placeholder='ประเทศไทย'
+              placeholder='ระบุ ประเทศ'
               readOnly
               value={country}
               onChange={(e) => setCountry(e.target.value)}
