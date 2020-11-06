@@ -180,6 +180,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 
   if (product) {
     product.name = name
+    product.sellerName = req.user.name
     product.price = price
     product.description = description
     product.image = image

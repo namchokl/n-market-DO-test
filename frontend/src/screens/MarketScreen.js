@@ -2,16 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Route } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  Jumbotron,
-  Row,
-  Col,
-  Image,
-  ListGroup,
-  Card,
-  Button,
-  Form,
-} from 'react-bootstrap'
+import { Row, Col, CardDeck } from 'react-bootstrap'
 
 import Product from '../components/Product'
 import Rating from '../components/Rating'
@@ -73,9 +64,11 @@ const MarketScreen = ({ history, match }) => {
       />
       {/* <MarketBanner market={market} /> */}
       <Row>
-        <h2>รายการสินค้า</h2>
+        <Col className='d-flex justify-content-between flex-wrap'>
+          <h2 className='nowrap mr-3'>รายการสินค้า</h2>
 
-        <Route render={({ history }) => <SearchBox history={history} />} />
+          <Route render={({ history }) => <SearchBox history={history} />} />
+        </Col>
       </Row>
 
       {loadingList ? (
@@ -85,11 +78,18 @@ const MarketScreen = ({ history, match }) => {
       ) : (
         <>
           <Row>
-            {products.map((product) => (
-              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                <Product product={product} />
-              </Col>
-            ))}
+            <div className='card-container py-3'>
+              {products.map((product) => (
+                <Product
+                  key={product._id}
+                  marketId={market._id}
+                  product={product}
+                />
+                // <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                //   <Product marketId={market._id} product={product} />
+                // </Col>
+              ))}
+            </div>
           </Row>
           {products.length == 0 && (
             <h5 className='text-center mt-5'>- ยังไม่มีสินค้า -</h5>

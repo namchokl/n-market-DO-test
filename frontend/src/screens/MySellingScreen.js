@@ -9,6 +9,8 @@ import { listMySelling } from '../actions/orderActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
 const MySellingScreen = ({ location, history }) => {
+  const dateLocale = 'th' // 'en-gb'
+
   // define 'Component level State'
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -118,7 +120,13 @@ const MySellingScreen = ({ location, history }) => {
         ) : errorOrders ? (
           <Message variant='danger'>{errorOrders}</Message>
         ) : (
-          <Table striped bordered hover responsive className='table-sm'>
+          <Table
+            striped
+            bordered
+            hover
+            responsive
+            className='table-sm h-nowrap'
+          >
             <thead>
               <tr>
                 <th>วันที่</th>
@@ -134,21 +142,24 @@ const MySellingScreen = ({ location, history }) => {
             <tbody>
               {orders.map((order) => (
                 <tr key={order._id}>
-                  <td>{order.createdAt.substring(0, 10)}</td>
-                  <td>{order.buyer.name}</td>
+                  {/* <td className='nowrap'>{order.createdAt.substring(0, 10)}</td> */}
+                  <td className='nowrap'>
+                    {new Date(order.createdAt).toLocaleDateString(dateLocale)}
+                  </td>
+                  <td className='nowrap'>{order.buyer.name}</td>
                   <td>{order.product.name}</td>
                   <td>{order.product.qty}</td>
                   <td>{order.totalPrice}</td>
                   <td>
                     {order.isPaid ? (
-                      order.paidAt.substring(0, 10)
+                      new Date(order.paidAt).toLocaleDateString(dateLocale)
                     ) : (
                       <i className='fas fa-times' style={{ color: 'red' }}></i>
                     )}
                   </td>
                   <td>
                     {order.isDelivered ? (
-                      order.deliveredAt.substring(0, 10)
+                      new Date(order.deliveredAt).toLocaleDateString(dateLocale)
                     ) : (
                       <i className='fas fa-times' style={{ color: 'red' }}></i>
                     )}

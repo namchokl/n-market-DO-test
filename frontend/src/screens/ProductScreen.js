@@ -6,6 +6,7 @@ import FormContainer from '../components/FormContainer'
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import BackButton from '../components/BackButton'
 import Meta from '../components/Meta'
 import {
   listProductDetails,
@@ -16,6 +17,7 @@ import {
   PRODUCT_CREATE_REVIEW_RESET,
   PRODUCT_UPDATE_RESET,
 } from '../constants/productConstants'
+import { ORDER_CREATE_RESET } from '../constants/orderConstants'
 
 const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1)
@@ -26,6 +28,9 @@ const ProductScreen = ({ history, match }) => {
   const [note, setNote] = useState('')
 
   const dispatch = useDispatch()
+
+  const marketDetails = useSelector((state) => state.marketDetails)
+  const { market } = marketDetails
 
   const productDetail = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetail
@@ -59,18 +64,22 @@ const ProductScreen = ({ history, match }) => {
       setFormOrder(false)
     }
 
-    dispatch(listProductDetails(match.params.id))
+    dispatch({ type: ORDER_CREATE_RESET })
+    dispatch(listProductDetails(match.params.pid))
   }, [dispatch, match, successProductReview, orderSuccess])
 
   const prepareToOrderHandler = () => {
-    // history.push(`/makeorder/${match.params.id}?qty=${qty}`)
+    // history.push(`/makeorder/${match.params.pid}?qty=${qty}`)
     setFormOrder(!formOrder)
+    if (orderError) {
+      dispatch({ type: ORDER_CREATE_RESET })
+    }
   }
 
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(
-      createProductReview(match.params.id, {
+      createProductReview(match.params.pid, {
         rating,
         comment,
       })
@@ -79,20 +88,31 @@ const ProductScreen = ({ history, match }) => {
 
   const submitOrderHandler = (e) => {
     e.preventDefault()
-    dispatch(
-      createOrder({
-        productId: match.params.id,
-        unitPrice: product.price,
-        qty,
-        shipAddr,
-        note,
-      })
-    )
+    const newOrder = {
+      productId: match.params.pid,
+      market: match.params.mid,
+      marketName: market.name,
+      unitPrice: product.price,
+      qty,
+      shipAddr,
+      note,
+    }
+
+    // DEBUG:
+    if (match.params.mid !== market._id) {
+      window.alert('Submit Order Error - market ID not correct.')
+    }
+
+    dispatch(createOrder(newOrder))
   }
 
   return (
     <>
-      <Link className='btn btn-light my-3' to='/'>
+      <Link
+        className='btn btn-light mb-3 pl-0'
+        to={`/market/${match.params.mid}`}
+      >
+        {/* <BackButton path={`/market/${match.params.mid}`} /> */}
         Go Back
       </Link>
       {loading ? (
@@ -104,7 +124,12 @@ const ProductScreen = ({ history, match }) => {
           <Meta title={product.name} />
           <Row>
             <Col md={4} className='product-section'>
-              <Image src={product.image} alt={product.name} fluid />
+              <Image
+                src={product.image}
+                alt={product.name}
+                className='card-shadow'
+                fluid
+              />
             </Col>
             <Col md={8}>
               <Row>

@@ -14,6 +14,8 @@ import {
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 
 const MyProductScreen = ({ history, match }) => {
+  const dateLocale = 'th' // 'en-gb'
+
   const pageNumber = match.params.pageNumber || 1
 
   const dispatch = useDispatch()
@@ -98,7 +100,7 @@ const MyProductScreen = ({ history, match }) => {
           <Table striped bordered hover responsive className='table-sm'>
             <thead>
               <tr>
-                <th>ID</th>
+                <th>Created</th>
                 <th>NAME</th>
                 <th>PRICE</th>
                 <th>CATEGORY</th>
@@ -108,7 +110,9 @@ const MyProductScreen = ({ history, match }) => {
             <tbody>
               {myProducts.map((product) => (
                 <tr key={product._id}>
-                  <td>{product._id}</td>
+                  <td>
+                    {new Date(product.createdAt).toLocaleDateString(dateLocale)}
+                  </td>
                   <td>{product.name}</td>
                   <td>${product.price}</td>
                   <td>{product.category}</td>

@@ -6,7 +6,15 @@ import Product from '../models/productModel.js'
 // @route   POST /api/orders
 // @access  Private
 const addOrderItems = asyncHandler(async (req, res) => {
-  const { productId, unitPrice, qty, shipAddr, note } = req.body
+  const {
+    productId,
+    market,
+    marketName,
+    unitPrice,
+    qty,
+    shipAddr,
+    note,
+  } = req.body
 
   const product = await Product.findById(productId)
 
@@ -53,6 +61,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
   const order = new Order({
     buyer: req.user._id,
     seller: product.user,
+    market,
+    marketName,
     product: {
       id: product._id,
       name: product.name,

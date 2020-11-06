@@ -12,6 +12,15 @@ const orderSchema = mongoose.Schema(
       required: true,
       ref: 'User',
     },
+    market: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'Market',
+    },
+    marketName: {
+      type: String,
+      required: true,
+    },
     status: {
       type: String,
       default: 'open', // open,  seller-accept, seller-delivered, close

@@ -14,17 +14,21 @@ const SearchBox = ({ history }) => {
   }
 
   return (
-    <Form onSubmit={submitHandler} inline>
-      <Form.Control
-        type='text'
-        name='q'
-        onChange={(e) => setKeyword(e.target.value)}
-        placeholder='Search Products...'
-        className='mr-sm-2 ml-sm-5'
-      ></Form.Control>
-      <Button type='submit' variant='outline-success' className='p-2'>
-        Search
-      </Button>
+    <Form onSubmit={submitHandler} className='searchbox'>
+      <div className='input-group'>
+        <Form.Control
+          type='text'
+          name='q'
+          onChange={(e) => setKeyword(e.target.value)}
+          placeholder='Search Products...'
+          // className='mr-sm-2 ml-sm-5'
+        ></Form.Control>
+        <div class='input-group-append'>
+          <Button type='submit' variant='outline-success' className='py-2 px-3'>
+            <i class='fas fa-search'></i>
+          </Button>
+        </div>
+      </div>
     </Form>
   )
 }

@@ -4,7 +4,7 @@ import { Card } from 'react-bootstrap'
 
 const Market = ({ market }) => {
   return (
-    <Card className='my-3 p-1 rounded'>
+    <Card className='my-3 p-2 rounded card-shadow'>
       <Link to={`/market/${market._id}`}>
         <div
           style={{
@@ -25,14 +25,14 @@ const Market = ({ market }) => {
         </div>
       </Link>
 
-      <Card.Body>
+      <Card.Body className='pt-2 pb-0 px-0'>
         <Link to={`/market/${market._id}`}>
           <Card.Title as='div'>
             <strong>{market.name}</strong>
           </Card.Title>
         </Link>
 
-        <Card.Text as='h5' className='text-right'>
+        <Card.Text as='h5' className='text-right market-icons'>
           <span title='สมาชิก'>
             <i className='fas fa-users'></i> {market.numPeople}
           </span>
