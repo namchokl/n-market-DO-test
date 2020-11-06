@@ -29,6 +29,15 @@ h2 {
   margin-left: 0.7rem;
 }
 
+/* Button */
+
+.btn-go-back {
+  font-weight: normal;
+  margin: 0 0 1rem;
+  padding: 0.5rem;
+  border: 1px solid #343a40;
+}
+
 /* carousel */
 .carousel-item-next,
 .carousel-item-prev,
@@ -73,7 +82,7 @@ div.order-form {
 
 /* MarketScreen */
 .market-icons {
-  color: rgb(250, 160, 42);
+  color: #343a40;
 }
 
 i.details-icon {
@@ -111,8 +120,9 @@ i.details-icon {
 }
 
 .new-market {
-  letter-spacing: 1px;
-  padding: 0.45rem 0.35rem;
+  font-size: 0.68rem;
+  letter-spacing: 1.2px;
+  padding: 0.5rem;
 }
 
 /* Search Box */
@@ -130,15 +140,6 @@ i.details-icon {
 }
 
 /* Product component */
-.pos-cardend {
-  display: flex;
-  align-content: flex-end;
-  flex-direction: column-reverse;
-}
-
-.card-shadow {
-  box-shadow: 2px 2px 7px slategrey;
-}
 
 .card-container {
   display: flex;
@@ -155,6 +156,41 @@ i.details-icon {
   display: flex;
   margin: 0.5rem;
   width: 94%;
+  box-shadow: 2px 2px 7px slategrey;
+}
+
+.card-item .card-body {
+  padding: 0.75rem 0 0;
+}
+
+.card-item .cardbody-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-end {
+  display: flex;
+  align-content: flex-end;
+  flex-direction: column-reverse;
+  margin-top: 1rem;
+}
+
+.card-end > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card-item .prod-status {
+  color: gray;
+  border: 2px solid gray;
+  letter-spacing: 1px;
+  padding: 0.4rem;
+  margin-bottom: 0;
+}
+
+.text-strike {
+  text-decoration: line-through;
 }
 
 /* for order tables */

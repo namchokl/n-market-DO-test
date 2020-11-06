@@ -109,7 +109,7 @@ const ProductScreen = ({ history, match }) => {
   return (
     <>
       <Link
-        className='btn btn-light mb-3 pl-0'
+        className='btn btn-light btn-go-back'
         to={`/market/${match.params.mid}`}
       >
         {/* <BackButton path={`/market/${match.params.mid}`} /> */}

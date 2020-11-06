@@ -27,7 +27,7 @@ const Market = ({ market }) => {
 
       <Card.Body className='pt-2 pb-0 px-0'>
         <Link to={`/market/${market._id}`}>
-          <Card.Title as='div'>
+          <Card.Title as='h5'>
             <strong>{market.name}</strong>
           </Card.Title>
         </Link>

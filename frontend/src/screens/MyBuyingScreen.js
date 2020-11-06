@@ -141,6 +141,7 @@ const MyBuyingScreen = ({ location, history }) => {
                 <th>ชำระเงิน</th>
                 <th>จัดส่ง</th>
                 <th>คนขาย</th>
+                <th>ตลาด</th>
                 <th></th>
               </tr>
             </thead>
@@ -168,6 +169,7 @@ const MyBuyingScreen = ({ location, history }) => {
                     )}
                   </td>
                   <td className='nowrap'>{order.seller.name}</td>
+                  <td>{order.marketName}</td>
                   <td>
                     <LinkContainer to={`/order/${order._id}`}>
                       <Button className='btn-sm' variant='light'>

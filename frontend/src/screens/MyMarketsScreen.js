@@ -38,7 +38,7 @@ const MyMarketsScreen = ({ history, match }) => {
       </h1>
       <Row>
         {markets.map((market) => (
-          <Col key={market._id} sm={12} md={6} lg={4} xl={3}>
+          <Col key={market._id} sm={12} md={6} lg={6} xl={4}>
             <Market market={market} />
           </Col>
         ))}

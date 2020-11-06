@@ -100,11 +100,13 @@ const MyProductScreen = ({ history, match }) => {
           <Table striped bordered hover responsive className='table-sm'>
             <thead>
               <tr>
-                <th>Created</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>CATEGORY</th>
-                <th>BRAND</th>
+                <th>สร้างเมื่อ</th>
+                <th>ชื่อสินค้า</th>
+                <th>สถานะ</th>
+                <th>คงเหลือ</th>
+                <th>ราคา</th>
+                <th>หมวดหมู่</th>
+                <th>ตลาด</th>
               </tr>
             </thead>
             <tbody>
@@ -114,9 +116,11 @@ const MyProductScreen = ({ history, match }) => {
                     {new Date(product.createdAt).toLocaleDateString(dateLocale)}
                   </td>
                   <td>{product.name}</td>
-                  <td>${product.price}</td>
+                  <td>{product.active ? 'พร้อมขาย' : 'หยุดชั่วคราว'}</td>
+                  <td>{product.countInStock}</td>
+                  <td>{product.price} บาท</td>
                   <td>{product.category}</td>
-                  <td>{product.brand}</td>
+                  <td>{product.markets.length}</td>
 
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
