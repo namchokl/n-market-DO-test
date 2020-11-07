@@ -33,6 +33,8 @@ const Header = ({ history }) => {
 
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
+            // this is the way to pass history as 'props' into component used in
+            'Route'
             {/* <Route render={({ history }) => <SearchBox history={history} />} /> */}
             <Nav className='ml-auto' as='ul'>
               <LinkContainer to='/mymarkets'>
