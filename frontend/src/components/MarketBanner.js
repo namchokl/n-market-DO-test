@@ -29,7 +29,7 @@ const MarketBanner = ({ name, image, id, create, market }) => {
   }
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo && userInfo.markets) {
       setMarketList(userInfo.markets.map((item) => item._id))
     }
   }, [userInfo])
