@@ -139,7 +139,7 @@ const MarketEditScreen = ({ match, history, create }) => {
     <>
       <Link
         to={marketId ? `/market/${marketId}` : '/markets'}
-        className='btn btn-light my-3'
+        className='btn btn-light btn-go-back'
       >
         Go Back
       </Link>

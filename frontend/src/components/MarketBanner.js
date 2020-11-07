@@ -51,6 +51,7 @@ const MarketBanner = ({ name, image, id, create, market }) => {
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         height: '160px',
+        marginBottom: '1rem',
         padding: 0,
         position: 'relative',
       }}

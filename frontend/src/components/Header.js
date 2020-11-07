@@ -19,7 +19,13 @@ const Header = ({ history }) => {
 
   return (
     <header>
-      <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+      <Navbar
+        className='py-3'
+        bg='dark'
+        variant='dark'
+        expand='lg'
+        collapseOnSelect
+      >
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand>neighbor-Market</Navbar.Brand>

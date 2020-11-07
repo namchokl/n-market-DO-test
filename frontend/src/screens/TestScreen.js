@@ -15,8 +15,8 @@ const TestScreen = () => {
   // const key_G = Math.floor(Math.random() * 256)
   // const key_B = Math.floor(Math.random() * 256)
 
-  const key_R = 158
-  const key_G = 188
+  const key_R = 170
+  const key_G = 150
   const key_B = 220
 
   const keyColor = '#' + key_R + key_G + key_B

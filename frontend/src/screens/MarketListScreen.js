@@ -57,7 +57,7 @@ const MarketListScreen = ({ history, match }) => {
       <Row>
         {markets.map((market) => (
           <Col key={market._id} sm={12} md={6} lg={4} xl={3}>
-            <Market market={market} />
+            <Market market={market} randColor={true} />
           </Col>
         ))}
       </Row>

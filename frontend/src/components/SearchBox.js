@@ -23,9 +23,9 @@ const SearchBox = ({ history }) => {
           placeholder='Search Products...'
           // className='mr-sm-2 ml-sm-5'
         ></Form.Control>
-        <div class='input-group-append'>
+        <div className='input-group-append'>
           <Button type='submit' variant='outline-success' className='py-2 px-3'>
-            <i class='fas fa-search'></i>
+            <i className='fas fa-search'></i>
           </Button>
         </div>
       </div>

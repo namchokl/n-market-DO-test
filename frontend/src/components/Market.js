@@ -1,10 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Card } from 'react-bootstrap'
+import randomColor from '../utils/randColor'
 
-const Market = ({ market }) => {
+const Market = ({ market, randColor }) => {
+  let color = randColor ? { boxShadow: `3px 3px 14px ${randomColor()}` } : {}
+
   return (
-    <Card className='my-3 p-2 rounded card-shadow'>
+    <Card
+      className={`my-3 p-2 rounded ${randColor || 'card-shadow'}`}
+      style={color}
+    >
       <Link to={`/market/${market._id}`}>
         <div
           style={{
