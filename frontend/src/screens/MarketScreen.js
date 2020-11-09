@@ -39,6 +39,9 @@ const MarketScreen = ({ history, match }) => {
     products,
     page,
     pages,
+    market: listMarketId,
+    keyword: listKeyword,
+    pageNumber: listpageNumber,
   } = productList
 
   const userLogin = useSelector((state) => state.userLogin)
@@ -50,7 +53,16 @@ const MarketScreen = ({ history, match }) => {
       dispatch(getMarketDetails(match.params.id))
     }
 
-    dispatch(listProducts(match.params.id, '', pageNumber))
+    // [ TODO: Find out how to not re-load product list data if data's still valid.]
+    // Might use LocalStorage to keep tracking -or- keep market-id and pageNumber into the Reducer as well.
+
+    if (
+      listMarketId !== match.params.id ||
+      listpageNumber !== pageNumber ||
+      listKeyword !== ''
+    ) {
+      dispatch(listProducts(match.params.id, '', pageNumber))
+    }
   }, [dispatch, match])
 
   return (

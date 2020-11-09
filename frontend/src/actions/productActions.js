@@ -40,7 +40,7 @@ export const listProducts = (
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
-      payload: data,
+      payload: { ...data, market, keyword, pageNumber },
     })
   } catch (error) {
     dispatch({

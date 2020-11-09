@@ -16,6 +16,41 @@ h2 {
   padding: 0.5rem 0;
 }
 
+/* Experiment */
+.text-gradient {
+  font-weight: bolder;
+  letter-spacing: 0.15rem;
+  background: linear-gradient(
+    270deg,
+    #f3d664 5%,
+    #f38e8a 23%,
+    #f769b9 41%,
+    #c6a8fa 59%,
+    #40f8ec 88%,
+    #83fb97 95%
+  );
+  background-image: linear-gradient(
+    270deg,
+    rgb(250, 226, 131) 5%,
+    rgb(255, 157, 153) 23%,
+    rgb(255, 165, 216) 41%,
+    rgb(206, 178, 255) 59%,
+    rgb(141, 253, 246) 88%,
+    rgb(151, 255, 169) 95%
+  );
+  background-position-x: initial;
+  background-position-y: initial;
+  background-size: initial;
+  background-repeat: initial;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: text;
+  background-color: initial;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Rating */
 .rating {
   color: rgb(250, 160, 42);
   margin-bottom: 0.75rem;

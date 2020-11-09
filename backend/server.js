@@ -30,12 +30,15 @@ app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/upload', uploadRoutes)
 
-app.get('/api/config/paypal', (req, res) =>
-  res.send(process.env.PAYPAL_CLIENT_ID)
-)
+// app.get('/api/config/paypal', (req, res) =>
+//   res.send(process.env.PAYPAL_CLIENT_ID)
+// )
 
 const __dirname = path.resolve()
+app.use(express.static(__dirname, { dotfiles: 'allow' }))
+app.use('/.well-known', express.static(path.join(__dirname, '/.well-known')))
 // make the 'upload' folder accessible from the browser.
+
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 if (process.env.NODE_ENV === 'production') {

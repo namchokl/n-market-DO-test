@@ -28,7 +28,9 @@ const Header = ({ history }) => {
       >
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand>neighbor-Market</Navbar.Brand>
+            <Navbar.Brand className='text-gradient'>
+              neighbor-Market
+            </Navbar.Brand>
           </LinkContainer>
 
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
