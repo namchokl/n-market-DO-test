@@ -77,6 +77,8 @@ const MarketListScreen = ({ history, match }) => {
         </Alert>
       )}
 
+      {loading && <Loader />}
+      {error && <Message variant='danger'>{error}</Message>}
       <Row>
         {markets.map((market) => (
           <Col key={market._id} sm={12} md={6} lg={4} xl={3}>
