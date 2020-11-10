@@ -6,6 +6,7 @@ import {
   MY_MARKETS_LIST_REQUEST,
   MY_MARKETS_LIST_SUCCESS,
   MY_MARKETS_LIST_FAIL,
+  MY_MARKETS_LIST_RESET,
   MARKET_DETAILS_REQUEST,
   MARKET_DETAILS_SUCCESS,
   MARKET_DETAILS_FAIL,
@@ -210,6 +211,8 @@ export const joinMarket = (id) => async (dispatch, getState) => {
       payload: data.userInfo,
     })
 
+    dispatch({ type: MY_MARKETS_LIST_RESET })
+
     // update localStorage for market list
     localStorage.setItem('userInfo', JSON.stringify(data.userInfo))
   } catch (error) {
@@ -251,6 +254,8 @@ export const leaveMarket = (id) => async (dispatch, getState) => {
       type: USER_LOGIN_UPDATE_MARKET,
       payload: data.userInfo,
     })
+
+    dispatch({ type: MY_MARKETS_LIST_RESET })
 
     // update localStorage for market list
     localStorage.setItem('userInfo', JSON.stringify(data.userInfo))

@@ -30,7 +30,7 @@ import {
   ORDER_LIST_MY_RESET,
   ORDER_MY_SELLING_RESET,
 } from '../constants/orderConstants'
-
+import { MY_MARKETS_LIST_RESET } from '../constants/marketConstants'
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
@@ -297,4 +297,5 @@ export const logout = () => (dispatch) => {
   dispatch({ type: ORDER_MY_SELLING_RESET })
   dispatch({ type: USER_LIST_RESET })
   dispatch({ type: ORDER_LIST_ALL_RESET })
+  dispatch({ type: MY_MARKETS_LIST_RESET })
 }

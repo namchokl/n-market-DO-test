@@ -31,14 +31,14 @@ const Market = ({ market, randColor }) => {
         </div>
       </Link>
 
-      <Card.Body className='pt-2 pb-0 px-0'>
+      <Card.Body className='card-market-name'>
         <Link to={`/market/${market._id}`}>
           <Card.Title as='h5'>
             <strong>{market.name}</strong>
           </Card.Title>
         </Link>
 
-        <Card.Text as='h5' className='text-right market-icons'>
+        <Card.Text as='p' className='card-market-icons'>
           <span title='สมาชิก'>
             <i className='fas fa-users'></i> {market.numPeople}
           </span>

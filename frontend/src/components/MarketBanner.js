@@ -56,56 +56,50 @@ const MarketBanner = ({ name, image, id, create, market }) => {
         position: 'relative',
       }}
     >
-      <h1
-        style={{
-          fontSize: '150%',
-          display: 'inline-block',
-          backgroundColor: 'rgba(255,255,255,0.65)',
-          top: 0,
-          // width: '85%',
-          textAlign: 'center',
-          padding: '0.5rem',
-        }}
-      >
-        ตลาด: {name}
-      </h1>
-      {!create && market && (
-        <Card.Text as='h5' className='p-3'>
-          <span title='สมาชิก'>
-            <i className='fas fa-users'></i> {market.numPeople}
-          </span>
-          <span title='สินค้า'>
-            <i className='fas fa-boxes ml-3'></i> {market.numProducts}
-          </span>
-        </Card.Text>
-      )}
+      <div className='d-flex justify-content-between flex-wrap market-title'>
+        <div>
+          <h1 className='market-name'>ตลาด: {name}</h1>
 
-      {market && market._id && (
-        <LinkContainer to={`/market/${market._id}/edit`}>
-          <i className='fas fa-ellipsis-h details-icon'></i>
-        </LinkContainer>
-      )}
+          {!create && market && (
+            <Card.Text as='h5' className='px-3 pb-2'>
+              <span title='สมาชิก'>
+                <i className='fas fa-users'></i> {market.numPeople}
+              </span>
+              <span title='สินค้า'>
+                <i className='fas fa-boxes ml-3'></i> {market.numProducts}
+              </span>
+            </Card.Text>
+          )}
+        </div>
 
-      {marketList.includes(id) ? (
-        <Button
-          variant='info'
-          size='sm'
-          className='join-market-sm'
-          onClick={leaveMarketHandler}
-        >
-          เป็นสมาชิกแล้ว
-        </Button>
-      ) : (
-        <Button
-          variant='warning'
-          size='lg'
-          className='join-market'
-          onClick={joinMarketHandler}
-        >
-          <i className='fas fa-user-plus' />
-          เข้าร่วม
-        </Button>
-      )}
+        {userInfo && market && market._id && (
+          <LinkContainer to={`/market/${market._id}/edit`}>
+            <i className='fas fa-ellipsis-h details-icon'></i>
+          </LinkContainer>
+        )}
+      </div>
+
+      {userInfo &&
+        (marketList.includes(id) ? (
+          <Button
+            variant='info'
+            size='sm'
+            className='join-market-sm'
+            onClick={leaveMarketHandler}
+          >
+            เป็นสมาชิกแล้ว
+          </Button>
+        ) : (
+          <Button
+            variant='warning'
+            size='lg'
+            className='join-market'
+            onClick={joinMarketHandler}
+          >
+            <i className='fas fa-user-plus' />
+            เข้าร่วม
+          </Button>
+        ))}
     </Jumbotron>
   )
 }

@@ -5,6 +5,7 @@ import {
   MY_MARKETS_LIST_REQUEST,
   MY_MARKETS_LIST_SUCCESS,
   MY_MARKETS_LIST_FAIL,
+  MY_MARKETS_LIST_RESET,
   MARKET_DETAILS_REQUEST,
   MARKET_DETAILS_SUCCESS,
   MARKET_DETAILS_FAIL,
@@ -46,12 +47,15 @@ export const myMarketListReducer = (state = { markets: [] }, action) => {
     case MY_MARKETS_LIST_SUCCESS:
       return {
         loading: false,
+        success: true,
         markets: action.payload.markets,
         page: action.payload.page,
         pages: action.payload.pages,
       }
     case MY_MARKETS_LIST_FAIL:
       return { loading: false, error: action.payload }
+    case MY_MARKETS_LIST_RESET:
+      return { markets: [] }
     default:
       return state
   }

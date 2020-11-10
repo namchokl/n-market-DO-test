@@ -1,3 +1,19 @@
+body {
+  font-family: 'Mali', 'Nunito Sans', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+.bold-text {
+  font-weight: 700;
+}
+
+.link-text {
+  text-decoration: underline;
+  color: darkgreen;
+  font-weight: 700;
+}
+
 main {
   min-height: 80vh;
 }
@@ -17,6 +33,7 @@ h2 {
 }
 
 /* Experiment */
+
 .text-gradient {
   font-weight: bolder;
   letter-spacing: 0.15rem;
@@ -69,8 +86,13 @@ h2 {
 .btn-go-back {
   font-weight: normal;
   margin: 0 0 1rem;
-  padding: 0.5rem;
+
   border: 1px solid #343a40;
+}
+
+.textBtn {
+  font-size: 1rem;
+  padding: 0.2rem 0.6rem;
 }
 
 /* carousel */
@@ -116,8 +138,19 @@ div.order-form {
 }
 
 /* MarketScreen */
-.market-icons {
-  color: #343a40;
+.market-title {
+  color: grey;
+  text-shadow: 0 0 2px white, 0 0 4px white, 0 0 6px white;
+  top: 0;
+}
+
+.market-title .market-name {
+  top: 0;
+  right: 0;
+
+  margin-right: 2.5rem;
+  font-size: 150%;
+  padding: 0.5rem;
 }
 
 i.details-icon {
@@ -148,6 +181,23 @@ i.details-icon {
 
 .join-market i {
   margin-right: 0.5rem;
+}
+
+/* Market Cards */
+.card-market-name {
+  padding: 0.5rem 0 0;
+  height: 5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-market-icons {
+  text-align: right;
+  padding: 0.5rem;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: gray;
 }
 
 /* New Market button */

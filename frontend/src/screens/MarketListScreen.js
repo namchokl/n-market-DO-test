@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button, Row, Col } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Alert, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Market from '../components/Market'
 import Message from '../components/Message'
@@ -11,6 +12,7 @@ import { listMarkets } from '../actions/marketActions'
 const MarketListScreen = ({ history, match }) => {
   const pageNumber = match.params.pageNumber || 1
 
+  const [showAlert, setShowAlert] = useState(false)
   const dispatch = useDispatch()
 
   const marketList = useSelector((state) => state.marketList)
@@ -28,6 +30,7 @@ const MarketListScreen = ({ history, match }) => {
   const { userInfo } = userLogin
 
   useEffect(() => {
+    // setShowAlert(false)
     dispatch(listMarkets('', pageNumber))
   }, [dispatch, pageNumber])
 
@@ -41,6 +44,12 @@ const MarketListScreen = ({ history, match }) => {
   //   dispatch(createProduct())
   // }
 
+  const newMarketHandler = (e) => {
+    if (!userInfo) {
+      e.preventDefault()
+      setShowAlert(true)
+    }
+  }
   return (
     <>
       <h1>
@@ -49,11 +58,25 @@ const MarketListScreen = ({ history, match }) => {
           <Button
             variant='outline-primary'
             className='btn-sm float-right new-market'
+            onClick={newMarketHandler}
           >
             <i className='fas fa-plus-square'></i> Market
           </Button>
         </LinkContainer>
       </h1>
+
+      {showAlert && (
+        <Alert variant='danger' onClose={() => setShowAlert(false)} dismissible>
+          <p>
+            กรุณา{' '}
+            <Link to='/login' className='link-text'>
+              เข้าสู่ระบบ
+            </Link>{' '}
+            เพื่อสร้างตลาดขึ้นใหม่ !
+          </p>
+        </Alert>
+      )}
+
       <Row>
         {markets.map((market) => (
           <Col key={market._id} sm={12} md={6} lg={4} xl={3}>
