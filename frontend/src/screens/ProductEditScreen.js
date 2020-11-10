@@ -235,7 +235,8 @@ const ProductEditScreen = ({ match, history }) => {
                 <Form.Group controlId='description'>
                   <Form.Label>รายละเอียดสินค้า</Form.Label>
                   <Form.Control
-                    type='text'
+                    as='textarea'
+                    rows='4'
                     placeholder='Enter Description'
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
@@ -252,6 +253,7 @@ const ProductEditScreen = ({ match, history }) => {
                       label={mr.name}
                       checked={selMarkets.includes(mr._id)}
                       onChange={selectMarketHandler}
+                      className='ml-3 mb-2'
                     />
                   ))}
                 </Form.Group>

@@ -236,7 +236,7 @@ const MarketEditScreen = ({ match, history, create }) => {
             <Form.Label>กฎระเบียบ ของสมาชิกในกลุ่ม</Form.Label>
             <Form.Control
               as='textarea'
-              row='3'
+              rows='3'
               placeholder='ใส่ กฎระเบียบ'
               value={policy}
               onChange={(e) => setPolicy(e.target.value)}
