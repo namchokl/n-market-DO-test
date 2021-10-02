@@ -9,8 +9,8 @@
 
 ## Features:
 - Anyone can register.
-- User can create a new market for their local community/village if it's not exist yet.
-- User can choose to join any markets in order to sell or buy products with other members of those markets.
-- Seller and Buyer can track the statuses of their purchase items.  
-- Seller can easily manage their product items' status & details.
-- Buyer can search and make purchase on interesting items.
+- Users can create a new market (a virtual group for local community e.g. their village) if it's not exist yet.
+- Users can choose to join any markets in order to sell or buy products with other members of those markets.
+- Sellers and Buyers can track the status of their purchase items.  
+- Sellers can easily manage their product items' status & details.
+- Buyers can search and make purchase on interesting items.
